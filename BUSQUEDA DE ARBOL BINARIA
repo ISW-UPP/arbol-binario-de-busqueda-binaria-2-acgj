@@ -1,0 +1,170 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+
+struct Nodo
+{
+	char dato;
+	Nodo* der;
+	Nodo* izq;
+	Nodo* padre;
+};
+using namespace std;
+
+//Prototipos
+void menu();
+Nodo *crearNodo(char, Nodo*);
+void insertarNodo(Nodo*&, char, Nodo *);
+void mostrarArbol(Nodo*, char);
+Nodo *arbol=NULL;
+
+int main()
+{
+    int numeros[60];
+	int opcion;
+	int elem,dato;
+	int n, contador=0;
+	do
+	{
+	cout <<"\t----ARBOLES 'BUSQUEDA BINARIA'---- "<<endl;
+	cout <<"\t Menu\n ";
+	cout <<"\t1.- Agregar nodos al arbol "<<endl;
+	cout <<"\t2.- Mostrar el arbol"<<endl;
+	cout <<"\t3.- Busqueda de un nodo dentro del arbol"<<endl;
+	cout <<"\t4.- Salir"<<endl;
+	cout <<"\tQue accion deseas realizar: "<<endl;
+	cout<<endl;
+	cout<<"\t";
+	cin >>opcion;
+	
+	//Menu
+	switch(opcion)
+	{
+		case 1: //Opción para Agregar nodos 
+		cout << "\t*DEBE INGRESAR LOS NUMEROS ORDENADOS ASCENDENTEMENTE   "<<endl;
+
+		cout << "\tCuantos numeros desea agregar al arbol: "<<endl;
+		cout<<"\t";
+		cin>> n;
+		for(int i=0;i<n;i++)
+		{
+		cout<<"\tIngrese elemento "<<i+1<<":";
+		cin>>numeros[i];
+		insertarNodo(arbol,numeros[i],NULL);
+		}
+		break;
+		case 2://Opción para mostrar el arbol
+		cout << "\tMostrando el arbol completo \n\n";
+		mostrarArbol(arbol, contador);
+		break;
+		case 3: //Opcion para buscar
+		for(int i=0;i<dato;i++){
+	//Repetir hasta n elementos que ingrese el usuario
+        cin>>numeros[i];
+	}
+		int numeros[] = { };
+	int inf, sup, mitad, dato, i;
+
+	char band = 'F';
+    cout<<"Ingrese el numero que desea buscar: ";
+        cin>>dato;   
+	
+
+	inf = 0;
+	sup = 6;
+	i = 0;
+	
+	while ((inf <= sup) && (i< 6))
+	{
+		mitad = (inf + sup) / 2;// mitad
+
+		if (numeros[mitad] == dato)
+		{
+			band = 'V';
+			
+			break; //Se encontro el elemento buscado, para no perder tiempo
+		}
+		if (numeros[mitad] > dato)
+		{
+			sup = mitad;
+			mitad = (inf + sup) / 2; //Refrescar la mitad con un nuevo valor del lado superior
+		}
+		if (numeros[mitad] < dato)
+		{
+			inf = mitad;
+			mitad = (inf + sup) / 2; //Refrescar la mitad con un nuevo valor del lado inferior
+		}
+		i++;
+	}
+
+	if (band == 'V')
+	{
+		cout << "El numero se encontro en la posicion: " << mitad << endl; // mitad guarda las posiciones
+	}
+	else
+	{
+		cout << "El numero no se encontro";
+	}
+		
+		break; 
+	}
+	system("pause");
+	system("cls");
+}while(opcion!=4);//Ciclo para repetir el menu
+
+}
+
+//Prototipos
+Nodo *crearNodo(char n, Nodo* padre)
+{
+	Nodo *nuevo_nodo = new Nodo();
+	nuevo_nodo->dato=n;
+	nuevo_nodo->der=NULL;
+	nuevo_nodo->izq=NULL;
+	nuevo_nodo->padre=padre;
+	return nuevo_nodo;
+}
+void insertarNodo(Nodo*& arbol, char n, Nodo * padre)
+{
+	if(arbol==NULL)//si el arbol esta vacio
+	{
+		Nodo* nuevo_nodo=crearNodo(n, padre);
+		arbol = nuevo_nodo;
+	}
+	else
+	{//Si el arbol tiene un nodo o mas
+		int valorRaiz =arbol->dato; //Obtenemos el valor de la raiz
+		if(n< valorRaiz)
+		{//Si el elemento es menor a la raiz, se inserta en la izquierda
+			insertarNodo(arbol->izq,n, arbol);
+		}
+		else
+		{//Si el elemento es mayor a la raiz, se inserta a la derecha
+			insertarNodo(arbol->der,n, arbol);	
+		}
+	}
+}
+void mostrarArbol(Nodo* arbol, char cont)
+{
+	if(arbol==NULL) //Si el arbol esta vacio
+	{
+		return;
+	}
+	else
+	{
+		mostrarArbol(arbol-> der, cont+1);
+		for(int i=0; i<cont; i++)
+		{
+			cout << "     ";
+		}
+		cout << arbol->dato<<endl;
+		mostrarArbol(arbol->izq, cont+1);
+	}
+}
+
+
+
+
+
